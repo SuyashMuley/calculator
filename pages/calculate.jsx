@@ -81,17 +81,21 @@ function Calculate() {
     let currentNum9 = document.querySelector("#num9").value;
     if (currentNum1 == "") return;
     let Mode = [currentNum1,currentNum2,currentNum3,currentNum4,currentNum5,currentNum6,currentNum7,currentNum8,currentNum9];
-    Mode.sort();
-    let max = 0,count=[],i=0;
-    let temp = [];
-    for(i=0;i<9;i++){
-      Mode = Mode[i];
-      count[Mode] = (count[Mode] || 0) +1;
-      if(count[Mode] > max){
-        max = count[Mode]
+    const mode = {};
+    let max = 0, count = 0;
+    for(let i = 0;i <9;i++){
+      const item = Mode[i];
+      if(mode[item]){
+        mode[item]++;
+      }else{
+        mode[item] = 1;
+      }
+      if(count < mode[item]){
+        max = item;
+        count = mode[item];
       }
     }
-    setMedian(temp)
+    setMode(max)
   }
 
   const Clear = (e) => {
@@ -153,12 +157,13 @@ function Calculate() {
           <div>
               <button onClick={medianCal}>Median</button>
           </div>
-          <div >
-            <button onClick={Clear}>Clear</button>
-          </div>
           <div>
               <button onClick={ModeCal}>Mode</button>
           </div>
+          <div >
+            <button onClick={Clear}>Clear</button>
+          </div>
+
         </div>
       </form>
     </div>
