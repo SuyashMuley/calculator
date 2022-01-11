@@ -62,18 +62,9 @@ function Calculate() {
     let currentNum9 = document.querySelector("#num9").value;
     if (currentNum1 == "") return;
     let Median = [currentNum1,currentNum2,currentNum3,currentNum4,currentNum5,currentNum6,currentNum7,currentNum8,currentNum9];
-    // console.log(Median);
-    // const { length } = Median;
-    // Median.sort((a,b)=>a-b);
-    // if(9%2 ===0){
-    //     return(Median[9/ 2 -1] + Median[9/2]) / 2;
-    // }
-    // return Median[(9-1)/2];
-    var a=0;
-    var b=0;
-    const medianSort = Median.sort((a,b=>a-b));
-    return medianSort.length % 2 == 0 ? (medianSort[medianSort.length/2 -1] + medianSort[medianSort.length/2 - 1] / 2) : medianSort[Math.floor(medianSort.length/2)];
-
+    Median.sort();
+    console.log(Median);
+    setMedian(Median[5]);
   };
 
   const ModeCal = (e) => {
@@ -90,34 +81,21 @@ function Calculate() {
     let currentNum9 = document.querySelector("#num9").value;
     if (currentNum1 == "") return;
     let Mode = [currentNum1,currentNum2,currentNum3,currentNum4,currentNum5,currentNum6,currentNum7,currentNum8,currentNum9];
-    const mode = {};
-    let max = 0, count = 0;
-    // for(var i=0; i<9; i++){
-    //     const item = Mode[i];
-    //     if(mode[item]){
-    //         mode[item]++;
-    //     }else{
-    //         mode[item] = 1;
-    //     }
-    //     if (count < mode[item]){
-    //         max = item;
-    //         count = mode[item];
-    //     }
-    // }
-    // return max;
-    Mode.forEach(elem=>mode[elem] = mode[elem] + 1 || 1);
-    let modes = [];
-    let maxFreq = 0;
-    for(const key in mode){
-      if(mode[key] > maxFreq){
-        modes = [Number[key]];
+    Mode.sort();
+    let max = 0,count=[],i=0;
+    let temp = [];
+    for(i=0;i<9;i++){
+      Mode = Mode[i];
+      count[Mode] = (count[Mode] || 0) +1;
+      if(count[Mode] > max){
+        max = count[Mode]
       }
     }
+    setMedian(temp)
   }
 
   const Clear = (e) => {
     e.preventDefault();
-    // console.log("Result", currentSum);
     document.querySelector("form").reset();
     setClear(true);
     setCalMean(0);
@@ -126,7 +104,7 @@ function Calculate() {
   return (
     <div className="App">
       <div className="app-title">
-        <h1> Basic Form Calculator</h1>
+        <h1>Calculator</h1>
       </div>
       <form>
         <div>
@@ -169,13 +147,13 @@ function Calculate() {
           </div>
         </div>
         <div className="row">
-          <div className="col-xs-6">
+          <div>
             <button onClick={MeanCal}>Mean</button>
           </div>
           <div>
               <button onClick={medianCal}>Median</button>
           </div>
-          <div className="col-xs-6">
+          <div >
             <button onClick={Clear}>Clear</button>
           </div>
           <div>
